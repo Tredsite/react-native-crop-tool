@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RCTBridgeModule.h"
 
-@interface RNCropTool : NSObject
+@interface RNCropTool : NSObject <RCTBridgeModule>
 
 @end

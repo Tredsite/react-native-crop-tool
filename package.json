@@ -1,0 +1,32 @@
+{
+  "name": "react-native-crop-tool",
+  "version": "1.0.0",
+  "description": "Basic image cropping for react-native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Tredsite/react-native-crop-tool.git"
+  },
+  "keywords": [
+    "react-component",
+    "react-native",
+    "ios",
+    "image",
+    "cropping"
+  ],
+  "author": {
+    "name": "TRED",
+    "email": "andrewcrowell@tred.com",
+    "url": "https://www.tred.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "react-native": "*"
+  }
+}
