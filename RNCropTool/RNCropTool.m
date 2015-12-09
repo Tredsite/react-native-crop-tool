@@ -40,7 +40,7 @@ RCT_EXPORT_METHOD(crop:(NSString *)imagePath
         NSDictionary *result = @{
                                  @"width": [NSNumber numberWithDouble:croppedImage.size.width],
                                  @"height": [NSNumber numberWithDouble:croppedImage.size.height]
-                                 };
+                                };
 
         resolve(result);
     }
