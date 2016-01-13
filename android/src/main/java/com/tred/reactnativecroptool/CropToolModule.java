@@ -1,4 +1,4 @@
-package com.bfkelsey.reactnativecroptool;
+package com.tred.reactnativecroptool;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,17 +24,14 @@ public class CropToolModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void crop(String photoPath,
+    public boolean crop(String photoPath,
                      int heightFactor,
-                     int widthFactor,
-                     Callback errorCallback,
-                     Callback successCallback) {
+                     int widthFactor) {
 
         String filePath = Environment.getExternalStorageDirectory() + "/" + photoPath;
         Bitmap image = BitmapFactory.decodeFile(filePath);
         if (image == null) {
-            errorCallback.invoke("Could not decode image.");
-            return;
+            return false;
         }
         // Crop image
         int xCoordinate = image.getWidth() * (1 - widthFactor) / 2;
@@ -42,12 +39,14 @@ public class CropToolModule extends ReactContextBaseJavaModule {
         Bitmap croppedPhoto = Bitmap.createBitmap(image, xCoordinate, yCoordinate,
                 image.getHeight() * heightFactor, image.getWidth() * widthFactor);
 
+        image.recycle();
+        image = null;
+
         FileOutputStream fileOutputStream;
         try {
             fileOutputStream = new FileOutputStream(filePath);
         } catch (FileNotFoundException e) {
-            errorCallback.invoke(e.getMessage());
-            return;
+            return false;
         }
         // Write image to file
         croppedPhoto.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
@@ -55,6 +54,9 @@ public class CropToolModule extends ReactContextBaseJavaModule {
         HashMap<String, Integer> result = new HashMap<>();
         result.put("width", croppedPhoto.getWidth());
         result.put("height", croppedPhoto.getHeight());
-        successCallback.invoke(result);
+
+        croppedPhoto.recycle();
+        croppedPhoto = null;
+        return true;
     }
 }

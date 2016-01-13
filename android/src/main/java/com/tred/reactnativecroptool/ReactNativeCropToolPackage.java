@@ -1,4 +1,4 @@
-package com.bfkelsey.reactnativecroptool;
+package com.tred.reactnativecroptool;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
