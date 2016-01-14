@@ -24,20 +24,22 @@ public class CropToolModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public boolean crop(String photoPath,
-                     int heightFactor,
-                     int widthFactor) {
+    public void crop(String photoPath,
+                     float heightFactor,
+                     float widthFactor,
+                     Callback callback) {
 
-        String filePath = Environment.getExternalStorageDirectory() + "/" + photoPath;
+        String filePath = photoPath.replaceFirst("file://", "");
         Bitmap image = BitmapFactory.decodeFile(filePath);
         if (image == null) {
-            return false;
+            callback.invoke("Image could not be decoded to Bitmap", false);
+            return;
         }
         // Crop image
-        int xCoordinate = image.getWidth() * (1 - widthFactor) / 2;
-        int yCoordinate = image.getHeight() * (1 - heightFactor) / 2;
+        int xCoordinate = (int)(image.getWidth() * (1 - widthFactor) / 2);
+        int yCoordinate = (int)(image.getHeight() * (1 - heightFactor) / 2);
         Bitmap croppedPhoto = Bitmap.createBitmap(image, xCoordinate, yCoordinate,
-                image.getHeight() * heightFactor, image.getWidth() * widthFactor);
+                              (int)(image.getWidth() * widthFactor), (int)(image.getHeight() * heightFactor));
 
         image.recycle();
         image = null;
@@ -46,7 +48,8 @@ public class CropToolModule extends ReactContextBaseJavaModule {
         try {
             fileOutputStream = new FileOutputStream(filePath);
         } catch (FileNotFoundException e) {
-            return false;
+            callback.invoke(e.getMessage(), false);
+            return;
         }
         // Write image to file
         croppedPhoto.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
@@ -57,6 +60,8 @@ public class CropToolModule extends ReactContextBaseJavaModule {
 
         croppedPhoto.recycle();
         croppedPhoto = null;
-        return true;
+        callback.invoke(null, true);
+        return;
     }
 }
+
