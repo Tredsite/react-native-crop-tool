@@ -45,7 +45,7 @@ RCT_EXPORT_METHOD(crop:(NSString *)imagePath
         resolve(result);
     }
     @catch (NSException *exception) {
-        reject([NSError errorWithDomain:[exception reason] code:500 userInfo:NULL]);
+        reject([NSString stringWithFormat: @"%lu", (long)500], [exception reason], [NSError errorWithDomain:[exception reason] code:500 userInfo:NULL]);
     }
 }
 
