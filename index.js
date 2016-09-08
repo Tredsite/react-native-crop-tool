@@ -1,8 +1,8 @@
-var React = require('react-native');
-var {
+import React from 'react';
+import {
   Platform,
   NativeModules,
-} = React;
+} from 'react-native';
 var RNCropTool = NativeModules.RNCropTool;
 
 module.exports = {
@@ -22,4 +22,3 @@ module.exports = {
     }
   }
 };
-
